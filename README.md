@@ -48,7 +48,7 @@ Implement a Trello-style Board page with full drag-and-drop, responsive design, 
 
 ### 1. **Clone the repository**
 ```bash
-git clone <YOUR_REPO_URL>
+git clone https://github.com/MoBekheet63/Trello-Board.git
 cd TrelloBoard
 ```
 
