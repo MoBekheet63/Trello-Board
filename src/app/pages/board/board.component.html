@@ -1,0 +1,85 @@
+@if (!loading()) {
+  <div class="mx-auto w-[95%] pt-10">
+    <div class="mb-8">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4">
+        @if (board()?.lists?.length) {
+          <div class="flex items-center gap-3">
+            <h2 class="text-2xl font-bold text-gray-800 !m-0">
+              {{ board()?.title }}
+            </h2>
+            <span
+              class="px-4 py-2 bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700 rounded-full text-sm font-semibold shadow-sm border border-indigo-200/50">
+              {{ board()?.lists?.length }}
+              {{ board()?.lists?.length === 1 ? 'List' : 'Lists' }}
+            </span>
+          </div>
+          
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openAddListDialog()"
+            class="bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl flex items-center gap-1 focus:outline-2 focus:outline-indigo-500 focus:outline-offset-2 normal-case">
+            <mat-icon>add</mat-icon>
+            Add List
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    @if (board() && board()?.lists?.length === 0) {
+      <div class="flex items-center justify-center min-h-[60vh]">
+        <div class="text-center py-16 px-12 bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-indigo-100/50 max-w-2xl mx-auto">
+          <div
+            class="p-8 bg-gradient-to-r from-indigo-100 to-blue-100 rounded-full w-32 h-32 mx-auto mb-10 flex items-center justify-center shadow-lg">
+            <mat-icon class="text-6xl text-indigo-600 !w-16 !h-16">dashboard</mat-icon>
+          </div>
+          <h3 class="text-4xl font-bold text-gray-800 mb-6 leading-tight"> Welcome to your Board! </h3>
+          <p class="text-gray-600 mb-12 max-w-lg mx-auto text-xl leading-relaxed">
+            Get started by creating your first list to organize your tasks and workflows.
+          </p>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openAddListDialog()"
+            class="bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white font-semibold px-12 py-6 rounded-xl shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto text-xl transition-all duration-300 transform hover:scale-105 normal-case">
+            <mat-icon>add</mat-icon>
+            Create Your First List
+          </button>
+        </div>
+      </div>
+    } @else {
+      <!-- Board content -->
+      <div
+        class="flex flex-nowrap gap-2 overflow-x-auto pb-8 scrollbar-thin snap-x snap-mandatory h-[calc(100vh-202px)]"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        [cdkDropListData]="board()?.lists || []"
+        (cdkDropListDropped)="onListDrop($event)">
+        <ng-template cdkDragPlaceholder>
+          <div class="cdk-drag-placeholder"></div>
+        </ng-template>
+        @for (list of board()?.lists ?? []; track list.id) {
+          <div class="flex-shrink-0 w-72 sm:w-80 md:w-[360px] snap-center" cdkDrag>
+            <app-list [list]="list" [allListIds]="listIds()"> </app-list>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
+
+<!-- Loading state -->
+@if (loading()) {
+  <div class="text-center py-24">
+    <div class="flex flex-col items-center gap-8">
+      <div class="p-8 bg-gradient-to-r from-indigo-100 to-blue-100 rounded-full shadow-lg">
+        <mat-spinner class="w-12 h-12" diameter="48"></mat-spinner>
+      </div>
+      <div class="space-y-3">
+        <p class="text-xl font-semibold text-gray-700">Loading your board...</p>
+        <p class="text-gray-500">Please wait while we fetch your data</p>
+      </div>
+    </div>
+  </div>
+}

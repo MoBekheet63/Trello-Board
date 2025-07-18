@@ -1,0 +1,58 @@
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply font-sans text-[14px] leading-[1.5] text-gray-800 bg-gray-50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Drag and Drop Styles */
+.cdk-drag-placeholder {
+  @apply opacity-40 bg-indigo-100 border-2 border-dashed border-indigo-500 rounded-xl p-1 h-fit;
+}
+
+/* Ensure placeholder doesn't interfere with other elements */
+.cdk-drop-list-dragging .cdk-drag-placeholder {
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.cdk-drop-list {
+  @apply border-2 border-dashed border-transparent;
+}
+
+.cdk-drop-list-receiving {
+  @apply bg-blue-50 border-2 border-dashed border-blue-300 rounded-[12px];
+}
+
+/* Responsive Design (moved from inline <style>) */
+@media (max-width: 480px) {
+}
+@media (hover: none) and (pointer: coarse) {
+  .list-menu-button {
+    @apply opacity-100 scale-110;
+  }
+  .add-task-button {
+    @apply px-5 py-3 text-sm;
+  }
+  .drag-handle {
+    @apply p-3;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="w-full max-w-xs md:min-w-[350px] md:max-w-[90vw] max-h-[90vh] overflow-y-auto bg-white rounded-2xl overflow-hidden shadow-2xl">
+  <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-red-50 to-orange-50 flex items-center gap-4">
+    <div class="p-3 bg-gradient-to-r from-red-500 to-orange-400 rounded-xl shadow-lg">
+      <mat-icon class="text-white text-2xl">warning</mat-icon>
+    </div>
+    <h2 class="text-xl font-bold text-gray-800 !m-0">{{ data.title || 'Confirm Delete' }}</h2>
+  </div>
+  <div class="p-6 md:p-8">
+    <div class="text-base text-gray-700 mb-2">{{ data.message }}</div>
+  </div>
+  <div class="flex justify-end gap-4 p-4 md:p-8 border-t border-gray-100 bg-gray-50 md:pt-8 md:pb-8 pt-3 pb-4">
+    <button
+      mat-button
+      type="button"
+      (click)="onCancel()"
+      class="px-8 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200 font-medium focus:outline-2 focus:outline-red-500 focus:outline-offset-2 normal-case">
+      {{ data.cancelText || 'Cancel' }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      type="button"
+      (click)="onDelete()"
+      class="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-1 focus:outline-2 focus:outline-red-500 focus:outline-offset-2 normal-case">
+      <mat-icon>delete</mat-icon>
+      {{ data.confirmText || 'Delete' }}
+    </button>
+  </div>
+</div>

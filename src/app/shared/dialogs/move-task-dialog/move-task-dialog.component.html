@@ -1,0 +1,44 @@
+<div class="w-full max-w-xs md:min-w-[350px] md:max-w-[90vw] max-h-[90vh] overflow-y-auto bg-white rounded-2xl overflow-hidden shadow-2xl">
+  <div class="p-8 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-4 !m-0">
+      <div class="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+        <mat-icon class="text-white text-2xl">swap_horiz</mat-icon>
+      </div>
+      Move Task
+    </h2>
+  </div>
+  <div class="p-8">
+    <div>
+      <label class="block text-base font-semibold text-gray-700 mb-3">Move to list:</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-select [(ngModel)]="selectedListId" class="text-base">
+          <mat-select-trigger>
+            {{ getSelectedListTitle() }}
+          </mat-select-trigger>
+          @for (col of data.lists; track col.id) {
+            <mat-option [value]="col.id"> {{ col.title }}{{ col.id === data.currentListId ? ' (Current)' : '' }} </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="flex justify-end gap-4 p-8 border-t border-gray-100 bg-gray-50">
+    <button
+      mat-button
+      type="button"
+      (click)="onCancel()"
+      class="px-8 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200 font-medium focus:outline-2 focus:outline-indigo-500 focus:outline-offset-2 normal-case"
+      >Cancel</button
+    >
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="onMove()"
+      [disabled]="!selectedListId() || selectedListId() === data.currentListId"
+      class="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-1 focus:outline-2 focus:outline-indigo-500 focus:outline-offset-2 normal-case">
+      <mat-icon>swap_horiz</mat-icon>
+      Move
+    </button>
+  </div>
+</div>

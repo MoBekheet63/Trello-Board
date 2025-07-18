@@ -1,0 +1,46 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 150,
+  "bracketSpacing": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "semi": true,
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "strict",
+  "proseWrap": "preserve",
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": {
+        "parser": "angular",
+        "printWidth": 150,
+        "htmlWhitespaceSensitivity": "strict",
+        "singleAttributePerLine": false
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": ["*.json", ".babelrc"],
+      "options": {
+        "parser": "json-stringify"
+      }
+    },
+    {
+      "files": ["*.jsonc", "tsconfig*.json"],
+      "parser": "json"
+    },
+    {
+      "files": ["*.js", "*.cjs", "*.mjs"],
+      "options": {
+        "parser": "babel"
+      }
+    }
+  ]
+}

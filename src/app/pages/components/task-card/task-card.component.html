@@ -1,0 +1,85 @@
+<div
+  class="bg-white rounded-lg shadow border border-gray-200 hover:shadow-md hover:border-indigo-200 group transition-all duration-200 p-2 cursor-pointer"
+  (click)="openViewTaskDialog()">
+  <div class="p-2">
+    <div class="flex items-center justify-between gap-1 mb-2">
+      <h4
+        class="text-base font-semibold text-gray-800 line-clamp-2 flex-1 leading-relaxed break-words hyphens-auto flex items-center gap-2 !mb-0"
+        [matTooltip]="getTitleTooltip()"
+        matTooltipPosition="above"
+        matTooltipClass="title-tooltip">
+        {{ task().title }}
+        @if (hasDescription()) {
+          <mat-icon matTooltip="This task has details" matTooltipPosition="above" class="text-green-500 align-middle !ml-1 !text-lg">
+            notes
+          </mat-icon>
+        }
+      </h4>
+      <button
+        mat-icon-button
+        class="opacity-100 md:opacity-0 md:group-hover:opacity-100 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200 flex-shrink-0 w-8 h-8 focus:outline-2 focus:outline-indigo-500 focus:outline-offset-2 shadow-sm task-menu-button normal-case"
+        [matMenuTriggerFor]="taskMenu"
+        aria-label="Task options"
+        (click)="$event.stopPropagation()">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #taskMenu="matMenu" class="mt-2">
+        <button
+          mat-menu-item
+          (click)="openViewTaskDialog(); $event.stopPropagation()"
+          class="flex items-center gap-1 px-4 py-2 hover:bg-gray-50 rounded transition-all duration-200">
+          <mat-icon class="text-indigo-400">visibility</mat-icon>
+          <span class="text-gray-800">View Details</span>
+        </button>
+        <button
+          mat-menu-item
+          (click)="openEditTaskDialog(); $event.stopPropagation()"
+          class="flex items-center gap-1 px-4 py-2 hover:bg-gray-50 rounded transition-all duration-200">
+          <mat-icon class="text-indigo-600">edit</mat-icon>
+          <span class="text-gray-800">Edit Task</span>
+        </button>
+        <button
+          mat-menu-item
+          (click)="openMoveTaskDialog(); $event.stopPropagation()"
+          class="flex items-center gap-1 px-4 py-2 hover:bg-blue-50 rounded transition-all duration-200">
+          <mat-icon class="text-blue-600">swap_horiz</mat-icon>
+          <span class="text-gray-800">Move Task</span>
+        </button>
+        <button
+          mat-menu-item
+          (click)="deleteTask(); $event.stopPropagation()"
+          class="flex items-center gap-1 px-4 py-2 hover:bg-red-50 rounded transition-all duration-200">
+          <mat-icon class="!text-red-600">delete</mat-icon>
+          <span class="text-red-600">Delete Task</span>
+        </button>
+      </mat-menu>
+    </div>
+    @if (hasDescription()) {
+      <p class="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed break-words hyphens-auto">
+        {{ task().description }}
+      </p>
+    }
+    <div class="flex items-center gap-1 justify-between">
+      <span class="flex items-center text-sm text-gray-500">
+        <mat-icon class="text-sm">schedule</mat-icon>
+        {{ formatDate(task().updatedAt) }}
+      </span>
+      <div>
+        @switch (task().priority) {
+          @case ('critical') {
+            <span class="ml-2 px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-bold tracking-wide shadow-sm">Critical</span>
+          }
+          @case ('high') {
+            <span class="ml-2 px-2 py-0.5 rounded bg-orange-100 text-orange-700 text-xs font-bold tracking-wide shadow-sm">High</span>
+          }
+          @case ('medium') {
+            <span class="ml-2 px-2 py-0.5 rounded bg-yellow-100 text-yellow-700 text-xs font-bold tracking-wide shadow-sm">Medium</span>
+          }
+          @case ('low') {
+            <span class="ml-2 px-2 py-0.5 rounded bg-gray-200 text-gray-700 text-xs font-bold tracking-wide shadow-sm">Low</span>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

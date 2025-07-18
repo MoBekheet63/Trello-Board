@@ -1,0 +1,97 @@
+<div class="bg-white rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl flex flex-col h-fit mx-2">
+  <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white rounded-t-2xl flex items-center justify-between gap-3">
+    <div class="flex items-center gap-1 flex-1 min-w-0">
+      <!-- Drag handle icon, visible only on desktop -->
+      <span
+        class="inline-flex cursor-grab active:cursor-grabbing text-gray-400 hover:text-indigo-500 text-2xl w-8 h-8 items-center justify-center active:scale-110 select-none"
+        cdkDragHandle
+        title="Move list">
+        ⠿
+      </span>
+      <h3
+        class="text-xl font-bold text-gray-800 flex-1 break-words !mb-0 truncate"
+        [matTooltip]="getTitleTooltip()"
+        matTooltipPosition="above"
+        matTooltipClass="title-tooltip">
+        {{ list().title }}
+      </h3>
+      <span
+        class="px-4 py-2 bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700 rounded-full text-sm font-semibold shadow-sm border border-indigo-200/50 flex items-center justify-center min-w-6 h-6 ms-2 leading-none"
+        matTooltip="Number of tasks in this list"
+        matTooltipPosition="above"
+        matTooltipClass="task-count-tooltip">
+        {{ getTaskCount() }}
+      </span>
+    </div>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="listMenu"
+      aria-label="List options"
+      class="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-200 p-2 focus:outline-2 focus:outline-indigo-500 focus:outline-offset-2 shadow-sm normal-case">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #listMenu="matMenu" class="mt-2">
+      <button
+        mat-menu-item
+        (click)="openEditListDialog()"
+        class="flex items-center gap-1 px-4 py-2 hover:bg-gray-50 rounded transition-all duration-200">
+        <mat-icon class="text-indigo-600 !me-3">edit</mat-icon>
+        <span class="text-gray-800">Edit List</span>
+      </button>
+      <button
+        mat-menu-item
+        (click)="openMoveListDialog()"
+        class="flex items-center gap-1 px-4 py-2 hover:bg-gray-50 rounded transition-all duration-200">
+        <mat-icon class="text-blue-600 !me-3">swap_horiz</mat-icon>
+        <span class="text-gray-800">Move List</span>
+      </button>
+      <button mat-menu-item (click)="deleteList()" class="flex items-center gap-1 px-4 py-2 hover:bg-red-50 rounded transition-all duration-200">
+        <mat-icon class="!text-red-600 !me-3">delete</mat-icon>
+        <span class="text-red-600">Delete List</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <div class="p-5 space-y-4 relative">
+    <div
+      cdkDropList
+      [id]="list().id"
+      [cdkDropListData]="list().tasks"
+      (cdkDropListDropped)="onTaskDrop($event)"
+      [cdkDropListConnectedTo]="connectedLists()"
+      (cdkDropListEntered)="onDropListEntered()"
+      (cdkDropListExited)="onDropListExited()"
+      class="p-0 rounded-xl min-h-[120px] flex flex-col flex-1 gap-4 justify-between bg-white transition-all duration-200 relative"
+      #dropList>
+      @if (list().tasks.length > 0) {
+        @for (task of list().tasks; track task.id) {
+          <div cdkDrag>
+            <app-task-card [task]="task" [listId]="list().id" class="animate-fade-in-scale"> </app-task-card>
+          </div>
+        }
+      } @else {
+        @if (!isDraggingOverEmptyList()) {
+          <div class="flex-1 flex flex-col justify-center items-center min-h-[80px] text-center p-1 rounded-xl">
+            <div
+              class="p-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center shadow-sm">
+              <mat-icon class="text-2xl text-gray-400">assignment</mat-icon>
+            </div>
+            <p class="text-sm text-gray-500 font-semibold mb-1">No tasks yet</p>
+            <p class="text-xs text-gray-400">Drag tasks here or add new ones</p>
+          </div>
+        }
+      }
+    </div>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="w-full py-4 border-2 border-dashed border-indigo-300 hover:border-indigo-500 hover:bg-indigo-50 text-indigo-600 font-semibold rounded-xl transition-all duration-200 flex items-center justify-center relative z-50 pointer-events-auto"
+      (click)="openAddTaskDialog()">
+      <mat-icon>add</mat-icon>
+      Add Task
+    </button>
+  </div>
+</div>
