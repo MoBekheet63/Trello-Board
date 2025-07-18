@@ -61,10 +61,6 @@ npm install
 ```bash
 npm start
 ```
-أو
-```bash
-ng serve
-```
 
 ### 4. **Open in browser**
 Go to [http://localhost:4200](http://localhost:4200)
