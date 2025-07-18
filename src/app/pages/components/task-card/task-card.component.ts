@@ -72,7 +72,7 @@ export class TaskCardComponent {
         cancelText: 'Cancel',
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(distinctUntilChanged()).subscribe(result => {
       if (result) {
         this.boardService.deleteTask(this.listId(), this.task().id);
         this.snackBar.open('Task deleted', 'Close', {
@@ -95,7 +95,7 @@ export class TaskCardComponent {
         lists,
       },
     });
-    dialogRef.afterClosed().subscribe((targetListId: string) => {
+    dialogRef.afterClosed().pipe(distinctUntilChanged()).subscribe((targetListId: string) => {
       if (targetListId && targetListId !== this.listId()) {
         // Move to end of target list
         const targetList = board.lists.find(col => col.id === targetListId);

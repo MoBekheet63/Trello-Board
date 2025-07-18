@@ -187,7 +187,7 @@ export class ListComponent {
           cancelText: 'Cancel',
         },
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().pipe(distinctUntilChanged()).subscribe(result => {
         if (result) {
           this.boardService.deleteList(list.id);
           this.snackBar.open('List and all its tasks deleted', 'Close', {
@@ -207,7 +207,7 @@ export class ListComponent {
           cancelText: 'Cancel',
         },
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().pipe(distinctUntilChanged()).subscribe(result => {
         if (result) {
           this.boardService.deleteList(list.id);
           this.snackBar.open('List deleted', 'Close', {
